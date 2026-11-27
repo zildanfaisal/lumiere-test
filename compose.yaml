@@ -1,0 +1,75 @@
+name: lumiere
+
+services:
+  app:
+    build:
+      context: .
+      target: app
+    restart: unless-stopped
+    env_file:
+      - .env.docker
+    environment:
+      APP_KEY_FILE: /run/secrets/app_key
+      DB_PASSWORD_FILE: /run/secrets/db_password
+    secrets:
+      - app_key
+      - db_password
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - internal
+
+  web:
+    build:
+      context: .
+      target: web
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT:-80}:80"
+    depends_on:
+      - app
+    networks:
+      - internal
+
+  db:
+    image: mysql:8.4
+    restart: unless-stopped
+    env_file:
+      - .env.docker
+    environment:
+      MYSQL_PASSWORD_FILE: /run/secrets/db_password
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mysql_root_password
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - mysql_data:/var/lib/mysql
+    secrets:
+      - db_password
+      - mysql_root_password
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - mysqladmin ping -h localhost -u root --password="$$(cat /run/secrets/mysql_root_password)" --silent
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
+    networks:
+      - internal
+
+networks:
+  internal:
+    driver: bridge
+
+volumes:
+  mysql_data:
+
+secrets:
+  app_key:
+    file: ./docker/secrets/app_key
+  db_password:
+    file: ./docker/secrets/db_password
+  mysql_root_password:
+    file: ./docker/secrets/mysql_root_password
