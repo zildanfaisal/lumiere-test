@@ -103,7 +103,7 @@
                             >
                         </label>
 
-                        <button type="button" class="remove self-end px-3 py-2 text-red-700">
+                        <button type="button" class="remove link-danger self-end px-3 py-2">
                             Hapus
                         </button>
                     </div>
@@ -133,7 +133,7 @@
                 <input class="input" type="number" min="0" data-field="stock" required>
             </label>
 
-            <button type="button" class="remove self-end px-3 py-2 text-red-700">
+            <button type="button" class="remove link-danger self-end px-3 py-2">
                 Hapus
             </button>
         </div>

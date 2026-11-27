@@ -53,7 +53,7 @@
                                             @csrf
                                             @method('DELETE')
 
-                                            <button class="font-semibold text-red-700 underline underline-offset-4">
+                                            <button class="link-danger">
                                                 Hapus
                                             </button>
                                         </form>

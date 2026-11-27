@@ -3,11 +3,11 @@
 @section('content')
     <div class="mx-auto max-w-md py-12">
         <h1 class="font-serif text-5xl tracking-tight text-[#173f35]">
-            Rawat kulit, belanja dengan tenang.
+            Lumière Skin
         </h1>
 
         <p class="mt-4 text-stone-600">
-            Masuk sebagai admin atau pembeli untuk melanjutkan.
+            Le Laboratoire
         </p>
 
         <form method="POST" class="mt-8 space-y-5 rounded-2xl bg-white p-7 shadow-[0_12px_35px_rgba(23,63,53,.10)]">
@@ -37,10 +37,5 @@
 
             <button class="btn-primary w-full">Masuk</button>
         </form>
-
-        <div class="mt-5 text-sm text-stone-600">
-            <p>Admin: admin@lumiere.test / password</p>
-            <p>Pembeli: pembeli@lumiere.test / password</p>
-        </div>
     </div>
 @endsection

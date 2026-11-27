@@ -31,6 +31,7 @@ Route::middleware(['auth', 'role:pembeli'])->group(function () {
     Route::get('/keranjang', [CartController::class, 'index'])->name('cart.index');
     Route::post('/keranjang', [CartController::class, 'store'])->name('cart.store');
     Route::put('/keranjang', [CartController::class, 'update'])->name('cart.update');
+    Route::delete('/keranjang/{variantId}', [CartController::class, 'destroy'])->name('cart.destroy');
     Route::get('/pesanan', [OrderController::class, 'index'])->name('orders.index');
     Route::post('/pesanan', [OrderController::class, 'store'])->name('orders.store');
     Route::get('/pesanan/{order}', [OrderController::class, 'show'])->name('orders.show');

@@ -18,54 +18,68 @@
             </a>
         </div>
     @else
-        <form method="POST" action="{{ route('cart.update') }}" class="mt-8">
-            @csrf
-            @method('PUT')
+        <div class="table-wrap mt-8">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Produk</th>
+                        <th>Harga</th>
+                        <th>Jumlah</th>
+                        <th>Subtotal</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($items as $item)
+                        <tr>
+                            <td>
+                                <strong>{{ $item->product->name }}</strong>
+                                <span class="block text-sm text-stone-500">{{ $item->name }}</span>
+                            </td>
+                            <td>Rp {{ number_format($item->price, 0, ',', '.') }}</td>
+                            <td>
+                                <input
+                                    class="input w-24"
+                                    type="number"
+                                    min="0"
+                                    max="{{ $item->stock }}"
+                                    name="quantities[{{ $item->id }}]"
+                                    value="{{ $item->cart_quantity }}"
+                                    form="cart-update-form"
+                                >
+                            </td>
+                            <td>
+                                Rp {{ number_format($item->price * $item->cart_quantity, 0, ',', '.') }}
+                            </td>
+                            <td>
+                                <form
+                                    method="POST"
+                                    action="{{ route('cart.destroy', $item->id) }}"
+                                >
+                                    @csrf
+                                    @method('DELETE')
 
-            <div class="table-wrap">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Produk</th>
-                            <th>Harga</th>
-                            <th>Jumlah</th>
-                            <th>Subtotal</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($items as $item)
-                            <tr>
-                                <td>
-                                    <strong>{{ $item->product->name }}</strong>
-                                    <span class="block text-sm text-stone-500">{{ $item->name }}</span>
-                                </td>
-                                <td>Rp {{ number_format($item->price, 0, ',', '.') }}</td>
-                                <td>
-                                    <input
-                                        class="input w-24"
-                                        type="number"
-                                        min="0"
-                                        max="{{ $item->stock }}"
-                                        name="quantities[{{ $item->id }}]"
-                                        value="{{ $item->cart_quantity }}"
-                                    >
-                                </td>
-                                <td>
-                                    Rp {{ number_format($item->price * $item->cart_quantity, 0, ',', '.') }}
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <td colspan="3" class="text-right font-semibold">Total</td>
-                            <td class="font-bold">
-                                Rp {{ number_format($items->sum(fn ($item) => $item->price * $item->cart_quantity), 0, ',', '.') }}
+                                    <button class="link-danger">Hapus</button>
+                                </form>
                             </td>
                         </tr>
-                    </tfoot>
-                </table>
-            </div>
+                    @endforeach
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3" class="text-right font-semibold">Total</td>
+                        <td class="font-bold">
+                            Rp {{ number_format($items->sum(fn ($item) => $item->price * $item->cart_quantity), 0, ',', '.') }}
+                        </td>
+                        <td></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <form id="cart-update-form" method="POST" action="{{ route('cart.update') }}">
+            @csrf
+            @method('PUT')
 
             <div class="mt-5 flex justify-end">
                 <button class="btn-secondary">Perbarui keranjang</button>

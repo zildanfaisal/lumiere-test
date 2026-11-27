@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CartRequest;
 use App\Models\ProductVariant;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -43,6 +44,15 @@ class CartController extends Controller
         $request->session()->put('cart', $cart);
 
         return back()->with('success', 'Keranjang diperbarui.');
+    }
+
+    public function destroy(Request $request, int $variantId): RedirectResponse
+    {
+        $cart = $request->session()->get('cart', []);
+        unset($cart[$variantId]);
+        $request->session()->put('cart', $cart);
+
+        return back()->with('success', 'Produk dihapus dari keranjang.');
     }
 
     public static function items(Request $request)
