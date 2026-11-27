@@ -1,0 +1,14 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+@theme {
+    --font-sans: ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+@layer base { ::selection { background:#d59672;color:#173f35 } :focus-visible { outline:3px solid #d59672;outline-offset:3px } table{@apply w-full text-left} th{@apply bg-stone-100 px-5 py-3 text-xs font-bold uppercase tracking-wider text-stone-600} td{@apply border-t border-stone-100 px-5 py-4 align-top tabular-nums} }
+@layer components {
+ .page-title{@apply font-serif text-4xl tracking-tight text-[#173f35] md:text-5xl}.label{@apply mb-1.5 block text-sm font-semibold text-stone-700}.input{@apply w-full rounded-xl border border-stone-300 bg-white px-3 py-2.5 text-stone-900 shadow-sm placeholder:text-stone-400 focus:border-[#286957] focus:ring-2 focus:ring-[#286957]/20 focus:outline-none}.btn-primary{@apply rounded-xl bg-[#173f35] px-5 py-2.5 text-center font-semibold text-white shadow-[0_5px_14px_rgba(23,63,53,.20)] hover:bg-[#286957] disabled:cursor-not-allowed disabled:opacity-50}.btn-secondary{@apply rounded-xl bg-stone-200 px-5 py-2.5 font-semibold text-stone-800 hover:bg-stone-300}.btn-danger{@apply rounded-xl bg-red-700 px-5 py-2.5 font-semibold text-white hover:bg-red-800}.link{@apply text-sm font-semibold text-[#173f35] underline underline-offset-4}.table-wrap{@apply overflow-x-auto rounded-2xl bg-white shadow-[0_10px_30px_rgba(23,63,53,.06)]}.status{@apply inline-flex rounded-full bg-[#f1e4d8] px-3 py-1 text-sm font-semibold text-[#5f3827]}.nav-link{@apply underline-offset-4 hover:underline}
+}
